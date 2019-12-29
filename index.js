@@ -1,25 +1,68 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import Hello from './Hello';
-import './style.css';
+import { BrowserRouter as Router } from 'react-router-dom'
+import MaterialUICollapseMenu from 'material-ui-collapse-menu'
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props)
     this.state = {
-      name: 'React'
-    };
+      items: [
+        {
+          "id": 1,
+          "title": "",
+          "items": [
+            {
+              "id": "dashboard",
+              "icon": "dashboard",
+              "name": "Dashboard",
+              "link": "/dashboard"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "",
+          "items": [
+            {
+              "id": "catalog",
+              "icon": "",
+              "name": "Catalog",
+              "subitems": [
+                {
+                  "id": "article",
+                  "icon": "star",
+                  "name": "Articles List",
+                  "link": "/article"
+                },
+                {
+                  "id": "article",
+                  "icon": "",
+                  "name": "Articles",
+                  "subitems": [
+                    {
+                      "id": "articles-form",
+                      "icon": "add_circle",
+                      "name": "Articles Form",
+                      "link": "/article/form/new"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   }
 
   render() {
+    const { items } = this.state
     return (
-      <div>
-        <Hello name={this.state.name} />
-        <p>
-          Start editing to see some magic happen :)
-        </p>
-      </div>
-    );
+      <Router basename='/app'>
+        <MaterialUICollapseMenu items={items} />
+      </Router>
+    )
   }
 }
 
